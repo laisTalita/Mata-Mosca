@@ -80,6 +80,16 @@ function criaMosca() {
             p.textContent = pontosMoscas
         })
     })
+    mosca.addEventListener('touchstart', () => {
+        mosca.remove();
+        pontosMoscas += 260;
+        pontuacao.textContent = pontosMoscas;
+        document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
+            p.textContent = pontosMoscas;
+        });
+    });
+    
+
      setTimeout(()=>{
         if (jogoAtivo && document.body.contains(mosca)) {
             mosca.remove()
@@ -127,6 +137,19 @@ function restauraVida_dinheiro() {
             })
         }
     })
+    elementoBonus.addEventListener('touchstart', () => {
+        elementoBonus.remove();
+        if (elementoBonus.classList.contains('conquistaVida')) {
+            verificaVida(true);
+        } else if (elementoBonus.classList.contains('dinheiro')) {
+            pontosMoscas += 500;
+            pontuacao.textContent = pontosMoscas;
+            document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
+                p.textContent = pontosMoscas;
+            });
+        }
+    });
+    
     setInterval(()=>{
         if (document.body.contains(elementoBonus)) {
             elementoBonus.remove()
@@ -156,7 +179,14 @@ function dano() {
     }, 200); 
     verificaVida(false)  
   });
-
+  elementoDano.addEventListener('touchstart', () => {
+    elementoDano.classList.remove('bomba');
+    elementoDano.classList.add('explosao');
+    setTimeout(() => {
+        elementoDano.remove();
+    }, 200); 
+    verificaVida(false);
+  });
   setTimeout(()=>{
     if (document.body.contains(elementoDano)) {
         elementoDano.remove()
