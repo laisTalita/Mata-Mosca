@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+:root{
+  --vitoria:"Pixelify Sans", sans-serif; 
+}
+*{
+    padding: 0%;
+    margin: 0%;
+}
+html{
+  cursor: url('/imagens/mata_mosca.png')30 30,auto;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+body{
+    background-image: url('/imagens/bg.jpg');
+    background-repeat:no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y:hidden;
+}
+.p_ganhou{
+  width: 80%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 4em;
+  font-family:var(--vitoria);
+}
+.mosquito{
+    background-image: url('/imagens/mosca.png');
+    background-size: cover;
+}
+
+header{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  padding: 10px 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes desceBonus {
+  0%{
+    top: -20%;
+  }
+  100%{
+    top: 90%;
+  }
+}
+@keyframes sobeDano {
+  0%   { top: 100%; transform: translateX(0); }
+  20%  { top: 80%;  transform: translateX(30px); }
+  40%  { top: 60%;  transform: translateX(-50px); }
+  60%  { top: 40%;  transform: translateX(20px); }
+  80%  { top: 20%;  transform: translateX(-90px); }
+  100% { top: 0%;   transform: translateX(0); }
+}
+.bomba, .explosao{
+  width: 4em;
+  height: 4em;
+  background-size: cover;
+  animation: sobeDano linear 12s;
+  transition: opacity 0.6s ease-in-out;
+}
+.explosao{
+  width: 90px;
+  height: 90px;
+  background-image: url('/imagens/explosao.png');
+}
+.bomba{
+  background-image: url('/imagens/bomba.webp');
+  filter: drop-shadow(20px 4px 20px rgba(255, 183, 0, 0.989));
+
+}
+.dinheiro,.conquistaVida{
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  animation: desceBonus linear 7s  ;
+}
+.dinheiro{
+  filter: drop-shadow(20px 4px 20px rgba(255, 183, 0, 0.989));
+  background-image: url('/imagens/dinheiro.png');
+}
+.conquistaVida{
+  filter: drop-shadow(20px 4px 20px rgba(240, 226, 226, 0.237));
+  background-image:url('/imagens/caixa_enfermagem.png');
+}
+footer{
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+#pontos{
+  font-size: 1.2em;
+  margin-right: 2%;
+  font-weight: bold;
+  padding: 15px;
+  width: auto;
+  background-color: rgba(255, 255, 255, 0.457);
+  backdrop-filter: blur(8px);
+  font-family: 'Courier New', monospace;
+  border-radius: 10px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); }
+#pontos p{
+  display: inline;
+}
+.pontuacaoFinal{
+  margin: 10px;
+  color: rgba(255, 255, 255, 0.77);
+  font-size: 1.7em;
+
+}
+.pontuacaoFinal p{
+  display: inline;
+}
+footer img{
+  filter: drop-shadow(10px 10px 10px rgba(229, 228, 228, 0.523));
+}
+.game{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: rgba(49, 48, 48, 0.656);
+  backdrop-filter: blur(8px);
+}
+.game,.game_over{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.game img{
+  width: 90%;
+}
+.oculto{
+  display: none !important;
+}
+.botoesGame {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+ button {
+  border-radius: 10px;
+  width: auto;
+  padding: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.631);
+}
+button:hover{
+  transform:scale(1.1);
+}
+#b-index{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+}
+#b-index img{
+  width: 30%;
+  min-width: 320px;
+}
+.verde{
+  background-color: rgba(71, 151, 71, 0.959);
+}
+.vermelho{
+  background-color: rgb(198, 86, 86);
+}
+.azul{
+  background-color: rgb(59, 146, 168);
+}
+
+@keyframes curvaCima {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(25px, -15px); }
+  50%  { transform: translate(50px, -30px); }
+  75%  { transform: translate(75px, -15px); }
+  100% { transform: translate(100px, 0); }
+}
+@keyframes curvaBaixo {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(25px, 15px); }
+  50%  { transform: translate(50px, 30px); }
+  75%  { transform: translate(75px, 15px); }
+  100% { transform: translate(100px, 0); }
+}
+@keyframes voaDireita {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-20vw, -5vh);
+  }
+  50% {
+    transform: translate(-40vw, 4vh);
+  }
+  75% {
+    transform: translate(-60vw, -5vh);
+  }
+  100% {
+    transform: translate(-80vw, 9vh);
+  }
+}
+@keyframes voaEsquerda {
+  0% {
+    transform: scaleX(-1) translate(0, 0);
+  }
+  25% {
+    transform:  scaleX(-1) translate(-20vw, -4vh);
+  }
+  50% {
+    transform: scaleX(-1) translate(-40vw, 6vh);
+  }
+  75% {
+    transform:  scaleX(-1)translate(-60vw, -4vh);
+  }
+  100% {
+    transform: scaleX(-1) translate(-80vw, 6vh);
+  }
+}
+.direita{
+  animation: voaDireita 10s linear forwards;
+}
+.esquerda{
+  animation: voaEsquerda 10s linear forwards;
+}
+#controleMusica{
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+#botaoMusica{
+  background-color: rgba(255, 255, 255, 0.941);
+  border-radius: 10px;
+  border:1px solid white;
+}
+#botaoMusica i{
+  font-size: 1.1em;
+}
+#ligaMusica{
+  color: rgb(3, 103, 3);
+}
+#desligaMusica{
+  color: rgb(107, 8, 8);
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pr-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mata Mosquito</title>
+    <link rel="stylesheet" href="/estilo/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <audio id="bgm" src="/imagens/amusement_park_stage_bpm150.ogg" loop autoplay></audio>
+    <div id="controleMusica">
+        <button id="botaoMusica">
+            <i id="ligaMusica" class='bx bx-volume-full'></i>
+            <i id="desligaMusica" class='bx bx-volume-mute oculto'></i>
+        </button>
+        <input type="range" id="regulaMusica" class="oculto" value="1" min="0" max="5" step="1">
+    </div>
+    <header>
+        <div id="cronometro"><p id="tempo"></p></div>
+    </header>
+    <footer>
+        <div id="painel">
+            <div id="vidas"> 
+                <img class="vida" id="v1" src="/imagens/coracao_cheio.png" alt="">
+                <img class="vida" id="v2" src="/imagens/coracao_cheio.png" alt="">
+                <img class="vida" id="v3"  src="/imagens/coracao_cheio.png" alt="">
+
+            </div>
+        </div>
+        <div id="pontos">Pontos: <p class="pontuacao"></p></div>
+    </footer>
+    <section id="gameOver" class="game oculto">
+        <div class="game_over">
+            <img src="/imagens/game_over.png" alt="">
+            <div class="pontuacaoFinal">Pontuação Final : <p class="pontuacaoFinalText"></p></div> 
+
+            <div class="botoesGame">
+                <button id="voltar" class="verde" onclick="history.go(-1)">Voltar</button>
+                <button id="jogar" class="azul"  onclick="jogarNovamente()">Jogar Novamente</button>
+            </div>
+        </div>
+    </section>
+    <section id="vitoria" class="game oculto">
+        <div class="game_over">
+                <p class="p_ganhou">Você Ganhou </p>
+            <div class="pontuacaoFinal">Pontuação Final: <p class="pontuacaoFinalText"></p></div>
+
+            <div class="botoesGame">
+                <button id="voltar" class="verde" onclick="history.go(-1)">Voltar</button>
+                <button id="jogar" class="azul" onclick="jogarNovamente()">Jogar Novamente</button>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="/javaS/script.js"></script>
+<script src="/javaS/musica.js"></script>
+
+</html>
