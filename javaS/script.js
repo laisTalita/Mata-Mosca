@@ -176,7 +176,7 @@ function dano() {
     elementoDano.classList.add('explosao');
     setTimeout(() => {
       elementoDano.remove();
-    }, 200); 
+    }, 400); 
     verificaVida(false)  
   });
   elementoDano.addEventListener('touchstart', () => {
@@ -184,7 +184,7 @@ function dano() {
     elementoDano.classList.add('explosao');
     setTimeout(() => {
         elementoDano.remove();
-    }, 200); 
+    }, 400); 
     verificaVida(false);
   });
   setTimeout(()=>{
