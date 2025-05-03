@@ -124,7 +124,6 @@ function restauraVida_dinheiro() {
     document.body.appendChild(elementoBonus)
 
     elementoBonus.addEventListener('mouseenter',()=>{
-        elementoBonus.remove()
         if (elementoBonus.classList.contains('conquistaVida')) {
             verificaVida(true)
         }else if(elementoBonus.classList.contains('dinheiro')){
@@ -134,6 +133,8 @@ function restauraVida_dinheiro() {
                 p.textContent = pontosMoscas
             })
         }
+        elementoBonus.remove()
+
     })
     setInterval(()=>{
         if (document.body.contains(elementoBonus)) {
@@ -218,11 +219,11 @@ function verificaVida(valor) {
     if (valor) {
         if (vidas < 3) {
             vidas++;
-            const coracao = document.getElementById('v' + vidas).src = "../imagens/coracao_cheio.png";
+            const coracao = document.getElementById('v' + vidas).src = "imagens/coracao_cheio.png";
         }
     } else {
         if (vidas > 0) {
-            const coracao = document.getElementById('v' + vidas).src = "../imagens/coracao_vazio.png";
+            const coracao = document.getElementById('v' + vidas).src = "imagens/coracao_vazio.png";
             vidas--;
         }
     }
