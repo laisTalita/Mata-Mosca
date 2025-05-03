@@ -80,7 +80,7 @@ function criaMosca() {
             p.textContent = pontosMoscas
         })
     })
-    mosca.addEventListener('touchstart', () => {
+    mosca.addEventListener('touchmove', () => {
         mosca.remove();
         pontosMoscas += 260;
         pontuacao.textContent = pontosMoscas;
@@ -137,7 +137,7 @@ function restauraVida_dinheiro() {
             })
         }
     })
-    elementoBonus.addEventListener('touchstart', () => {
+    elementoBonus.addEventListener('touchmove', () => {
         elementoBonus.remove();
         if (elementoBonus.classList.contains('conquistaVida')) {
             verificaVida(true);
@@ -179,7 +179,7 @@ function dano() {
     }, 400); 
     verificaVida(false)  
   });
-  elementoDano.addEventListener('touchstart', () => {
+  elementoDano.addEventListener('touchmove', () => {
     elementoDano.classList.remove('bomba');
     elementoDano.classList.add('explosao');
     setTimeout(() => {
@@ -221,6 +221,31 @@ window.document.addEventListener('mousemove',(e)=>{
     clearTimeout(trocaLadoTime)
     }
 })
+window.document.addEventListener('touchmove', (e) => {
+    if (!moscaAtual) return;
+    e.preventDefault();
+
+    let touchX = e.touches[0].clientX;
+    let touchY = e.touches[0].clientY;
+
+    let posicaoMosca = moscaAtual.getBoundingClientRect();
+    let xMosca = posicaoMosca.left + (posicaoMosca.width / 2);
+    let yMosca = posicaoMosca.top + (posicaoMosca.height / 2);
+
+    let distancia = Math.sqrt(Math.pow(xMosca - touchX, 2) + Math.pow(yMosca - touchY, 2));
+
+    if (distancia < 700 && podeTrocarLado === true) {
+        ladoAleatorio(moscaAtual);
+        podeTrocarLado = false;
+
+        let trocaLadoTime = setTimeout(() => {
+            podeTrocarLado = true;
+        }, config.tempo_muda);
+
+        clearTimeout(trocaLadoTime);
+    }
+});
+
 function ladoAleatorio(mosca) {
     const ladoAtual = mosca.dataset.lado;
     const novoLado = Math.random() < 0.5 ? 'direita' : 'esquerda';
