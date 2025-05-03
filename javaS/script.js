@@ -14,6 +14,8 @@ let podeTrocarLado = true;
 
 let nivelEscolhido= new URLSearchParams(window.location.search)
 let nivel = nivelEscolhido.get('nivel')
+
+
 const configuracaoNivel = {
     facil:{
         tempo_criaMosca:2000,
@@ -22,7 +24,7 @@ const configuracaoNivel = {
         pontos_individuaisNiveis :5,
         criaBonus :4000,
         criaBomba:6000,
-        distancia_bomba:1000
+        distancia_bomba:4000
     },
     medio:{
         tempo_criaMosca:  1000,
@@ -30,17 +32,17 @@ const configuracaoNivel = {
         tempo_muda:  2000,
         pontos_individuaisNiveis: 10,
         criaBonus : 7000,
-        criaBomba:3000,
-        distancia_bomba:2000
+        criaBomba:2000,
+        distancia_bomba:6000
     },
     dificil:{
         tempo_criaMosca: 300,
-        tempo_desaparece: 1250,
+        tempo_desaparece: 1400,
         tempo_muda: 1630,
-        pontos_individuaisNiveis:20,
-        criaBonus :8000,
-        criaBomba:2000,
-        distancia_bomba:3000
+        pontos_individuaisNiveis:30,
+        criaBonus :3000,
+        criaBomba:1000,
+        distancia_bomba:6000
     }
 };
 let config = configuracaoNivel[nivel]
@@ -52,16 +54,17 @@ function retorna() {
 }
 window.addEventListener('resize', retorna)
  retorna()
+
 function criaMosca() {
     const mosca = document.createElement("div")
     mosca.classList.add('mosquito')
 
-    let randX = Math.floor(Math.random()*largura) -80
-    let randY = Math.floor(Math.random()*altura) -80
+    let randX = Math.floor(Math.random()*largura) -70
+    let randY = Math.floor(Math.random()*altura) -60
     randX = randX <0 ?0: randX
     randY = randY <0 ?0: randY
 
-    let randomSize= Math.floor(Math.random()*50)+30
+    let randomSize= Math.floor(Math.random()*60)+40
     mosca.style.position="absolute"
     mosca.style.left= `${randX}px`
     mosca.style.top= `${randY}px`
@@ -73,23 +76,8 @@ function criaMosca() {
     ladoAleatorio(moscaAtual)
 
     mosca.addEventListener('mouseenter',()=>{
-        mosca.remove()
-        pontosMoscas += 260
-        pontuacao.textContent=pontosMoscas
-        document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
-            p.textContent = pontosMoscas
-        })
+       matarMosca(moscaAtual)
     })
-    mosca.addEventListener('touchmove', () => {
-        mosca.remove();
-        pontosMoscas += 260;
-        pontuacao.textContent = pontosMoscas;
-        document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
-            p.textContent = pontosMoscas;
-        });
-    });
-    
-
      setTimeout(()=>{
         if (jogoAtivo && document.body.contains(mosca)) {
             mosca.remove()
@@ -103,6 +91,16 @@ function criaMosca() {
         }
      },config.tempo_desaparece)
 }
+
+function matarMosca(mosca) {
+    mosca.remove()
+    pontosMoscas += 260
+    pontuacao.textContent=pontosMoscas
+    document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
+        p.textContent = pontosMoscas
+    })
+}
+
 function restauraVida_dinheiro() {
     const tipo= Math.random()<0.5 ? 'vida':'dinheiro'
     const elementoBonus = document.createElement("div")
@@ -137,19 +135,6 @@ function restauraVida_dinheiro() {
             })
         }
     })
-    elementoBonus.addEventListener('touchmove', () => {
-        elementoBonus.remove();
-        if (elementoBonus.classList.contains('conquistaVida')) {
-            verificaVida(true);
-        } else if (elementoBonus.classList.contains('dinheiro')) {
-            pontosMoscas += 500;
-            pontuacao.textContent = pontosMoscas;
-            document.querySelectorAll('.pontuacaoFinalText').forEach(p => {
-                p.textContent = pontosMoscas;
-            });
-        }
-    });
-    
     setInterval(()=>{
         if (document.body.contains(elementoBonus)) {
             elementoBonus.remove()
@@ -179,20 +164,11 @@ function dano() {
     }, 400); 
     verificaVida(false)  
   });
-  elementoDano.addEventListener('touchmove', () => {
-    elementoDano.classList.remove('bomba');
-    elementoDano.classList.add('explosao');
-    setTimeout(() => {
-        elementoDano.remove();
-    }, 400); 
-    verificaVida(false);
-  });
   setTimeout(()=>{
     if (document.body.contains(elementoDano)) {
         elementoDano.remove()
     }
   },config.distancia_bomba)
-    
 }
 setInterval(()=>{
     dano()
@@ -218,34 +194,8 @@ window.document.addEventListener('mousemove',(e)=>{
             podeTrocarLado = true;
         },config.tempo_muda)
 
-    clearTimeout(trocaLadoTime)
     }
 })
-window.document.addEventListener('touchmove', (e) => {
-    if (!moscaAtual) return;
-    e.preventDefault();
-
-    let touchX = e.touches[0].clientX;
-    let touchY = e.touches[0].clientY;
-
-    let posicaoMosca = moscaAtual.getBoundingClientRect();
-    let xMosca = posicaoMosca.left + (posicaoMosca.width / 2);
-    let yMosca = posicaoMosca.top + (posicaoMosca.height / 2);
-
-    let distancia = Math.sqrt(Math.pow(xMosca - touchX, 2) + Math.pow(yMosca - touchY, 2));
-
-    if (distancia < 700 && podeTrocarLado === true) {
-        ladoAleatorio(moscaAtual);
-        podeTrocarLado = false;
-
-        let trocaLadoTime = setTimeout(() => {
-            podeTrocarLado = true;
-        }, config.tempo_muda);
-
-        clearTimeout(trocaLadoTime);
-    }
-});
-
 function ladoAleatorio(mosca) {
     const ladoAtual = mosca.dataset.lado;
     const novoLado = Math.random() < 0.5 ? 'direita' : 'esquerda';
@@ -268,11 +218,11 @@ function verificaVida(valor) {
     if (valor) {
         if (vidas < 3) {
             vidas++;
-            const coracao = document.getElementById('v' + vidas).src = "imagens/coracao_cheio.png";
+            const coracao = document.getElementById('v' + vidas).src = "../imagens/coracao_cheio.png";
         }
     } else {
         if (vidas > 0) {
-            const coracao = document.getElementById('v' + vidas).src = "imagens/coracao_vazio.png";
+            const coracao = document.getElementById('v' + vidas).src = "../imagens/coracao_vazio.png";
             vidas--;
         }
     }
@@ -297,4 +247,5 @@ let geraMoscas= setInterval(()=>{
 function jogarNovamente() {
     window.location.href = `papaMosca.html?nivel=${nivel}`;
 }
+
 
